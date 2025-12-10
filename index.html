@@ -1,94 +1,1919 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BioGel X – Akıllı Koruma Sistemi</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioGel X - Arkeolojik Koruma Teknolojisi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Reset ve Temel Stiller */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+        :root {
+            --primary: #1a237e;
+            --secondary: #00acc1;
+            --accent: #ff4081;
+            --success: #4caf50;
+            --light: #f5f5f5;
+            --dark: #212121;
+            --gray: #757575;
+            --light-gray: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
 
-    <!-- Animation Library (AOS) -->
-    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+        html {
+            scroll-behavior: smooth;
+        }
 
-    <link rel="stylesheet" href="style.css" />
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .highlight {
+            color: var(--secondary);
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary), #0097a7);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 172, 193, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 172, 193, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--secondary);
+            border: 2px solid var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        /* Navigation */
+        #navbar {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo i {
+            color: var(--secondary);
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .logo-text strong {
+            color: var(--secondary);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-left: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--secondary);
+        }
+
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+
+        .demo-btn {
+            background: linear-gradient(135deg, var(--secondary), #0097a7);
+            color: white !important;
+            padding: 8px 20px !important;
+            border-radius: 25px;
+            transition: var(--transition) !important;
+        }
+
+        .demo-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 172, 193, 0.3);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--primary);
+            margin: 3px 0;
+            transition: var(--transition);
+        }
+
+        /* Hero Section */
+        #hero {
+            padding-top: 120px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--gray);
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-visual {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .flask-container {
+            position: relative;
+            width: 150px;
+            height: 200px;
+            margin-bottom: 20px;
+        }
+
+        .flask {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            border-radius: 50% 50% 30% 30%;
+            position: relative;
+            border: 8px solid white;
+            box-shadow: inset 0 0 20px rgba(0, 172, 193, 0.2);
+        }
+
+        .flask::after {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            right: 10%;
+            bottom: 10%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50% 50% 30% 30%;
+        }
+
+        .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        .bubble:nth-child(1) { width: 20px; height: 20px; top: 30%; left: 30%; animation-delay: 0s; }
+        .bubble:nth-child(2) { width: 15px; height: 15px; top: 50%; left: 40%; animation-delay: 0.5s; }
+        .bubble:nth-child(3) { width: 25px; height: 25px; top: 40%; right: 30%; animation-delay: 1s; }
+        .bubble:nth-child(4) { width: 18px; height: 18px; bottom: 30%; left: 35%; animation-delay: 1.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Solution Section */
+        #solution {
+            background-color: white;
+        }
+
+        .solution-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .solution-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 5px solid var(--secondary);
+            text-align: center;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--secondary), #0097a7);
+        }
+
+        .card-icon i {
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .solution-card h3 {
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+            font-size: 1.8rem;
+        }
+
+        .solution-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .card-features {
+            list-style: none;
+            text-align: left;
+            padding: 0 20px;
+        }
+
+        .card-features li {
+            margin-bottom: 0.8rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+
+        .card-features i {
+            color: var(--success);
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        /* How It Works */
+        #how-it-works {
+            background-color: #f8f9fa;
+        }
+
+        .timeline {
+            max-width: 800px;
+            margin: 3rem auto 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--secondary), #0097a7);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-number {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--secondary), #0097a7);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 2rem;
+            flex-shrink: 0;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(0, 172, 193, 0.4);
+        }
+
+        .timeline-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            flex-grow: 1;
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            font-size: 1.5rem;
+        }
+
+        /* Sensor Data Section */
+        #sensor-data {
+            background-color: white;
+        }
+
+        .demo-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 12px 24px;
+            background-color: var(--light);
+            border: none;
+            border-radius: 25px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .control-btn.active,
+        .control-btn:hover {
+            background: linear-gradient(135deg, var(--secondary), #0097a7);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 172, 193, 0.3);
+        }
+
+        .chart-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2.5rem;
+            height: 400px;
+            position: relative;
+        }
+
+        .chart-legends {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .legend {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 10px 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .legend-text {
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .sensor-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h4 {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-bar {
+            height: 12px;
+            background-color: var(--light-gray);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .stat-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), #0097a7);
+            border-radius: 6px;
+        }
+
+        /* QR Code Section */
+        #qr-system {
+            background-color: #f8f9fa;
+        }
+
+        .qr-demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .qr-content h2 {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+
+        .qr-content p {
+            color: var(--gray);
+            margin-bottom: 2.5rem;
+            font-size: 1.2rem;
+        }
+
+        .qr-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .qr-feature {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .qr-feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .qr-feature i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .qr-feature h4 {
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .qr-feature p {
+            font-size: 1rem;
+            color: var(--gray);
+            margin: 0;
+        }
+
+        .qr-code-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .qr-code {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            max-width: 320px;
+            width: 100%;
+        }
+
+        .qr-visual {
+            width: 220px;
+            height: 220px;
+            background: #f8f9fa;
+            border: 2px dashed var(--light-gray);
+            border-radius: 10px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-pattern {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            background: repeating-linear-gradient(
+                0deg,
+                #000 0px, #000 10px,
+                transparent 10px, transparent 20px
+            );
+            background-size: 200px 20px;
+            animation: scan 2s linear infinite;
+        }
+
+        .qr-pattern::before {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 10px solid var(--dark);
+            top: 20px;
+            left: 20px;
+            border-radius: 15px;
+        }
+
+        .qr-pattern::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 4px;
+            background: var(--secondary);
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+        }
+
+        @keyframes scan {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 20px; }
+        }
+
+        .qr-info {
+            padding: 1rem;
+        }
+
+        .qr-info h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+        }
+
+        .qr-info p {
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .qr-link {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            word-break: break-all;
+            font-family: monospace;
+            background: #f8f9fa;
+            padding: 8px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        /* Team Section */
+        #team {
+            background-color: white;
+        }
+
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .team-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), #0097a7);
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .team-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .team-role {
+            color: var(--secondary);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .team-desc {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .team-skills {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background-color: #e3f2fd;
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info h2 {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info p {
+            color: var(--gray);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-details {
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--secondary), #0097a7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .contact-text h4 {
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-form {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--light-gray);
+            border-radius: 10px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(0, 172, 193, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p {
+            color: #bdc3c7;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        .fll-badge {
+            background-color: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        /* Responsive Tasarım */
+        @media (max-width: 992px) {
+            .hero-container,
+            .qr-demo,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                padding: 100px 0 60px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 80px;
+                flex-direction: column;
+                background-color: white;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                padding: 2rem 0;
+                z-index: 999;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-menu li {
+                margin: 1.5rem 0;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-number {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .control-btn {
+                width: 200px;
+            }
+            
+            .chart-container {
+                padding: 1.5rem;
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .solution-cards,
+            .team-members,
+            .qr-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animasyonlar */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-prescription-bottle-alt"></i>
+                <span class="logo-text">BioGel <strong>X</strong></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#hero" class="active">Ana Sayfa</a></li>
+                <li><a href="#solution">Çözüm</a></li>
+                <li><a href="#how-it-works">Nasıl Çalışır</a></li>
+                <li><a href="#sensor-data">Sensör Verileri</a></li>
+                <li><a href="#qr-system">QR Sistem</a></li>
+                <li><a href="#team">Ekip</a></li>
+                <li><a href="#contact" class="demo-btn">İletişim</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="hero-content" data-aos="fade-up">
-            <h1>BioGel X</h1>
-            <p>Arkeolojik eserler için akıllı koruma teknolojisi.</p>
-
-            <div class="buttons">
-                <a href="#how">Nasıl Çalışır?</a>
-                <a href="#sensor">Sensör Verileri</a>
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">Arkeolojik Mirası <span class="highlight">Geleceğe Koruyoruz</span></h1>
+                <p class="hero-subtitle">BioGel X, kırılgan eserlerin kazı anından itibaren bozulmasını önleyen üç parçalı yenilikçi koruma sistemidir.</p>
+                <div class="hero-buttons">
+                    <a href="#solution" class="btn-primary">Çözümümüzü İnceleyin</a>
+                    <a href="#sensor-data" class="btn-secondary">Canlı Verileri Görün</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-visual">
+                    <div class="flask-container">
+                        <div class="flask">
+                            <div class="bubble"></div>
+                            <div class="bubble"></div>
+                            <div class="bubble"></div>
+                            <div class="bubble"></div>
+                        </div>
+                    </div>
+                    <h3>BioGel Koruma Jeli</h3>
+                    <p>Biyolojik, güvenli ve yüksek verimli</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- FEATURES -->
-    <section class="features">
-        <div class="feature" data-aos="fade-right">
-            <h3>🔬 Kimyasal Koruma</h3>
-            <p>BioGel, eseri saniyeler içinde stabilize eder.</p>
-        </div>
-
-        <div class="feature" data-aos="fade-up">
-            <h3>📡 Sensör Teknolojisi</h3>
-            <p>Nem ve sıcaklık sensörleri mikro-iklimi ölçer.</p>
-        </div>
-
-        <div class="feature" data-aos="fade-left">
-            <h3>🔗 QR Kod Takibi</h3>
-            <p>Her eser kendi dijital kayıt sayfasına sahiptir.</p>
+    <!-- Solution Section -->
+    <section id="solution" class="fade-in">
+        <div class="container">
+            <h2 class="section-title">Üç Parçalı <span class="highlight">Bütünsel Çözüm</span></h2>
+            <p class="section-subtitle">BioGel X, arkeologların sahada karşılaştığı en büyük soruna kapsamlı bir çözüm sunar.</p>
+            
+            <div class="solution-cards">
+                <!-- Card 1 -->
+                <div class="solution-card">
+                    <div class="card-icon">
+                        <i class="fas fa-prescription-bottle-alt"></i>
+                    </div>
+                    <h3>1. BioGel</h3>
+                    <p>Biyolojik koruma jeli ile eserler anında stabilize edilir. Nem ve sıcaklık kontrolü sağlanır.</p>
+                    <ul class="card-features">
+                        <li><i class="fas fa-check"></i> Biyolojik ve güvenli formül</li>
+                        <li><i class="fas fa-check"></i> Eserlere yapışmaz</li>
+                        <li><i class="fas fa-check"></i> Yüksek nem tutma kapasitesi</li>
+                        <li><i class="fas fa-check"></i> Sıcaklık stabilizasyonu</li>
+                    </ul>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="solution-card">
+                    <div class="card-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3>2. Sensör Sistemi</h3>
+                    <p>Arduino tabanlı sensörler ile koruma etkinliği gerçek zamanlı olarak ölçülür ve grafiklenir.</p>
+                    <ul class="card-features">
+                        <li><i class="fas fa-check"></i> DHT22 nem/sıcaklık sensörü</li>
+                        <li><i class="fas fa-check"></i> Gerçek zamanlı veri izleme</li>
+                        <li><i class="fas fa-check"></i> Bilimsel kanıt sağlama</li>
+                        <li><i class="fas fa-check"></i> Karşılaştırmalı analiz</li>
+                    </ul>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="solution-card">
+                    <div class="card-icon">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h3>3. Dijital Arşiv</h3>
+                    <p>Her eser için QR kod ile erişilen dijital kayıt sistemi. Tüm veriler güvende ve erişilebilir.</p>
+                    <ul class="card-features">
+                        <li><i class="fas fa-check"></i> Benzersiz QR kod sistemi</li>
+                        <li><i class="fas fa-check"></i> Merkezi dijital arşiv</li>
+                        <li><i class="fas fa-check"></i> Kalıcı ve güvenli kayıt</li>
+                        <li><i class="fas fa-check"></i> Kolay erişim ve paylaşım</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- HOW IT WORKS -->
-    <section id="how" class="how">
-        <h2 data-aos="fade-up">BioGel X Nasıl Çalışır?</h2>
-
-        <div class="steps">
-            <div class="step" data-aos="zoom-in">
-                <span>1</span>
-                <p>Eser bulundu.</p>
-            </div>
-
-            <div class="step" data-aos="zoom-in">
-                <span>2</span>
-                <p>BioGel ile sarıldı.</p>
-            </div>
-
-            <div class="step" data-aos="zoom-in">
-                <span>3</span>
-                <p>Sensör modülü kaydı başlattı.</p>
-            </div>
-
-            <div class="step" data-aos="zoom-in">
-                <span>4</span>
-                <p>QR kod ile dijital arşivlendi.</p>
+    <!-- How It Works -->
+    <section id="how-it-works" class="fade-in">
+        <div class="container">
+            <h2 class="section-title">Nasıl <span class="highlight">Çalışır?</span></h2>
+            <p class="section-subtitle">BioGel X sisteminin 5 adımda çalışma süreci</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <h3>Eser Kazılıyor</h3>
+                        <p>Arkeolog hassas bir eseri topraktan çıkarır. Eser ortam değişikliğine maruz kalır ve hızla bozulma riski altındadır.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <h3>BioGel Uygulanıyor</h3>
+                        <p>Eserin üzerine BioGel jeli püskürtülür veya sürülür. Jel, eser etrafında koruyucu bir mikro-iklim tabakası oluşturur.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-number">3</div>
+                    <div class="timeline-content">
+                        <h3>Sensör Takılıyor</h3>
+                        <p>Arduino tabanlı sensör modülü yerleştirilir. Nem ve sıcaklık verileri gerçek zamanlı olarak kaydedilmeye başlanır.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-number">4</div>
+                    <div class="timeline-content">
+                        <h3>QR Kod Oluşturuluyor</h3>
+                        <p>Eser için benzersiz bir QR kod oluşturulur ve eserin yanına yerleştirilir. Bu kod dijital arşive bağlantı sağlar.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-number">5</div>
+                    <div class="timeline-content">
+                        <h3>Veriler Kaydediliyor</h3>
+                        <p>Tüm veriler (fotoğraflar, sensör okumaları, arkeolog notları) merkezi dijital arşive aktarılır ve kalıcı olarak saklanır.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- QR DEMO -->
-    <section class="qr" data-aos="fade-up">
-        <h2>QR Kodlu Kayıt Sistemi</h2>
-        <p>Her BioGel ürünü benzersizdir. QR taraması ile kendi sayfası açılır.</p>
+    <!-- Sensor Data Section -->
+    <section id="sensor-data" class="fade-in">
+        <div class="container">
+            <h2 class="section-title">Canlı <span class="highlight">Sensör Verileri</span></h2>
+            <p class="section-subtitle">BioGel'in etkinliğini gerçek zamanlı verilerle görün. 24 saatlik laboratuvar test sonuçları.</p>
+            
+            <div class="demo-controls">
+                <button class="control-btn active" data-chart="humidity">Nem Karşılaştırması</button>
+                <button class="control-btn" data-chart="temperature">Sıcaklık Karşılaştırması</button>
+                <button class="control-btn" data-chart="stability">Stabilite Analizi</button>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="sensorChart"></canvas>
+            </div>
+            
+            <div class="chart-legends">
+                <div class="legend">
+                    <span class="legend-color" style="background-color: #00acc1;"></span>
+                    <span class="legend-text">BioGel Uygulanmış Örnek</span>
+                </div>
+                <div class="legend">
+                    <span class="legend-color" style="background-color: #ff4081;"></span>
+                    <span class="legend-text">Kontrol Örneği (Jelsiz)</span>
+                </div>
+            </div>
+            
+            <div class="sensor-stats">
+                <div class="stat-card">
+                    <h4>Nem Stabilitesi</h4>
+                    <div class="stat-value">%94</div>
+                    <div class="stat-bar">
+                        <div class="stat-progress" style="width: 94%;"></div>
+                    </div>
+                    <p>BioGel nemi 24 saat korur</p>
+                </div>
+                
+                <div class="stat-card">
+                    <h4>Sıcaklık Kontrolü</h4>
+                    <div class="stat-value">%88</div>
+                    <div class="stat-bar">
+                        <div class="stat-progress" style="width: 88%;"></div>
+                    </div>
+                    <p>Isı değişimlerini azaltır</p>
+                </div>
+                
+                <div class="stat-card">
+                    <h4>Koruma Süresi</h4>
+                    <div class="stat-value">24+</div>
+                    <div class="stat-bar">
+                        <div class="stat-progress" style="width: 100%;"></div>
+                    </div>
+                    <p>Saatlerce etkili koruma</p>
+                </div>
+                
+                <div class="stat-card">
+                    <h4>Eser Güvenliği</h4>
+                    <div class="stat-value">%100</div>
+                    <div class="stat-bar">
+                        <div class="stat-progress" style="width: 100%;"></div>
+                    </div>
+                    <p>Hiçbir yan etki yok</p>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- QR System Section -->
+    <section id="qr-system" class="fade-in">
+        <div class="container">
+            <div class="qr-demo">
+                <div class="qr-content">
+                    <h2 class="section-title">QR Kod ile <span class="highlight">Dijital Arşivleme</span></h2>
+                    <p>Her BioGel uygulaması için oluşturulan benzersiz QR kod, eserin tüm bilgilerine anında erişim sağlar. Modern arkeoloji için vazgeçilmez bir kayıt sistemi.</p>
+                    
+                    <div class="qr-features">
+                        <div class="qr-feature">
+                            <i class="fas fa-camera"></i>
+                            <h4>Fotoğraf Arşivi</h4>
+                            <p>Eserin önce/sonra ve detay fotoğrafları</p>
+                        </div>
+                        
+                        <div class="qr-feature">
+                            <i class="fas fa-chart-line"></i>
+                            <h4>Sensör Verileri</h4>
+                            <p>Gerçek zamanlı nem ve sıcaklık grafikleri</p>
+                        </div>
+                        
+                        <div class="qr-feature">
+                            <i class="fas fa-file-alt"></i>
+                            <h4>Detaylı Rapor</h4>
+                            <p>Uygulama notları ve bilimsel test sonuçları</p>
+                        </div>
+                        
+                        <div class="qr-feature">
+                            <i class="fas fa-database"></i>
+                            <h4>Merkezi Arşiv</h4>
+                            <p>Bulut tabanlı güvenli veri saklama</p>
+                        </div>
+                    </div>
+                    
+                    <a href="#contact" class="btn-primary">
+                        <i class="fas fa-download"></i> Demo QR Kod İndir
+                    </a>
+                </div>
+                
+                <div class="qr-code-container">
+                    <div class="qr-code">
+                        <div class="qr-visual">
+                            <div class="qr-pattern"></div>
+                        </div>
+                        <div class="qr-info">
+                            <h4>Örnek Eser Kaydı</h4>
+                            <p>Ahşap Heykel - 15. Yüzyıl</p>
+                            <p class="qr-link">https://biogelx.com/artifact/AH-2023-001</p>
+                            <p><small>Bu QR kodu tarayarak eser detaylarına ulaşın</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="fade-in">
+        <div class="container">
+            <h2 class="section-title">Proje <span class="highlight">Ekibimiz</span></h2>
+            <p class="section-subtitle">BioGel X projesini geliştiren  Light Side Pro FLL (First Lego League) takımı üyeleri</p>
+            
+            <div class="team-members">
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>Elizya</h3>
+                    <div class="team-role">Proje Kaptanı</div>
+                    <p class="team-desc">BioGel formülasyonunun geliştirilmesi ve laboratuvar testlerinden sorumlu.</p>
+                    <div class="team-skills">
+                        <span class="skill-tag">Biyoloji</span>
+                        <span class="skill-tag">Kimya</span>
+                        <span class="skill-tag">Araştırma</span>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-captain"></<div class="team-card">
+                    </div>
+                    <h3>Doruk</h3>
+                    <div class="team-role">Light Side Pro FLL Kaptanı</div>
+                    <p class="team-desc">FLL Yarışması için robotu geliştirdi.</p>
+                    <div class="team-skills">
+                        <span class="skill-tag">Liderlik</span>
+                        <span class="skill-tag">Robot Geliştirme</span>
+                        <span class="skill-tag">Proje Yönetimi</span>
+                    </div>
+                </div>
+                        <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Kutlu</h3>
+                    <div class="team-role">Yazılım & Donanım Geliştirici</div>
+                    <p class="team-desc">Arduino sensör sistemi, web sitesi ve dijital arşiv altyapısını geliştirdi.</p>
+                    <div class="team-skills">
+                        <span class="skill-tag">Arduino</span>
+                        <span class="skill-tag">Web Geliştirme</span>
+                        <span class="skill-tag">Veri Analizi</span>
+                    </div>
+                </div>
+                    
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Uras</h3>
+                    <div class="team-role">Robot Geliştirici</div>
+                    <p class="team-desc">FLL Robotunu Yaptı</p>
+                    <div class="team-skills">
+                        <span class="skill-tag">Yazılım</span>
+                        <span class="skill-tag">Robotik</span>
+                        <span class="skill-tag">Lego</span>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Yer Tutucu</h3>
+                    <div class="team-role">Yer Tutucu</div>
+                    <p class="team-desc">Yer Tutucu</p>
+                    <div class="team-skills">
+                        <span class="skill-tag">Yer Tutucu</span>
+                        <span class="skill-tag">Yer Tutucu</span>
+                        <span class="skill-tag">Yer Tutucu</span>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Yer Tutucu</h3>
+                    <div class="team-role">Yer Tutucu</div>
+                    <p class="team-desc">Yer Tutucu</p>
+                    <div class="team-skills">
+                        <span class="skill-tag">Yer Tutucu</span>
+                        <span class="skill-tag">Yer Tutucu</span>
+                        <span class="skill-tag">Yer Tutucu</span>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Yer Tutucu</h3>
+                    <div class="team-role">Yer Tutucu</div>
+                    <p class="team-desc">Yer Tutucu</p>
+                    <div class="team-skills">
+                        <span class="skill-tag">Yer Tutucu</span>
+                        <span class="skill-tag">Yer Tutucu</span>
+                        <span class="skill-tag">Yer Tutucu</span>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Yer Tutucu</h3>
+                    <div class="team-role">Yer Tutucu</div>
+                    <p class="team-desc">Yer Tutucu</p>
+                    <div class="team-skills">
+                        <span class="skill-tag">Yer Tutucu</span>
+                        <span class="skill-tag">Yer Tutucu</span>
+                        <span class="skill-tag">Yer Tutucu</span>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Yer Tutucu</h3>
+                    <div class="team-role">Yer Tutucu</div>
+                    <p class="team-desc">Yer Tutucu</p>
+                    <div class="team-skills">
+                        <span class="skill-tag">Yer Tutucu</span>
+                        <span class="skill-tag">Yer Tutucu</span>
+                        <span class="skill-tag">Yer Tutucu</span>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Yer Tutucu</h3>
+                    <div class="team-role">Yer Tutucu</div>
+                    <p class="team-desc">Yer Tutucu</p>
+                    <div class="team-skills">
+                        <span class="skill-tag">Yer Tutucu</span>
+                        <span class="skill-tag">Yer Tutucu</span>
+                        <span class="skill-tag">Yer Tutucu</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="fade-in">
+        <div class="container">
+            <h2 class="section-title">Bizimle <span class="highlight">İletişime Geçin</span></h2>
+            <p class="section-subtitle">BioGel X projesi hakkında daha fazla bilgi almak veya işbirliği önerileriniz için bize ulaşın.</p>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2>İletişim Bilgileri</h2>
+                    <p>BioGel X projesi, FLL (First Lego League) yarışması kapsamında Light Side Pro takımı tarafından geliştirilmiş bir inovasyon projesidir. Arkeolojik mirasın korunmasına yönelik çözümümüz hakkında detaylı bilgi almak isterseniz, aşağıdaki iletişim kanallarından bize ulaşabilirsiniz.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>E-posta</h4>
+                                <p>biogelx@lightsidepro.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Konum</h4>
+                                <p>Teşvikiye Caddesi, No:6 İstanbul, Türkiye</p>
+                                <p>FMV Nişantaşı Işık Lisesi</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>FLL Yarışması</h4>
+                                <p>2025-2026 Sezonu</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Mesaj Gönderin</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Adınız Soyadınız</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">E-posta Adresiniz</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Konu</label>
+                            <input type="text" id="subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Mesajınız</label>
+                            <textarea id="message" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">Mesajı Gönder</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <p>FLL 2025 – Team Project | BioGel X</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-prescription-bottle-alt"></i>
+                        <span class="logo-text">BioGel <strong>X</strong></span>
+                    </div>
+                    <p>Arkeolojik mirası korumak için yenilikçi teknoloji çözümleri geliştiriyoruz.</p>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/lightsidepro?igsh=MWh4NHJxaGkwOW8zMg=="><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Hızlı Bağlantılar</h4>
+                    <ul>
+                        <li><a href="#hero">Ana Sayfa</a></li>
+                        <li><a href="#solution">Çözümümüz</a></li>
+                        <li><a href="#how-it-works">Nasıl Çalışır</a></li>
+                        <li><a href="#sensor-data">Sensör Verileri</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Kaynaklar</h4>
+                    <ul>
+                        <li><a href="#">FLL Proje Dokümanı</a></li>
+                        <li><a href="#">Bilimsel Test Sonuçları</a></li>
+                        <li><a href="#">BioGel Formül Detayları</a></li>
+                        <li><a href="#">Arduino Kodları</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>İletişim</h4>
+                    <p><i class="fas fa-envelope"></i> info@biogelx.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Teşvikiye Caddesi, No:6, İstanbul, Türkiye</p>
+                    <p><i class="fas fa-users"></i> Light Side Peo</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 BioGel X - Tüm hakları saklıdır. <span class="fll-badge">FLL PROJESİ</span></p>
+                <p class="footer-note">Light Side Pro'dan, Tüm <i class="fas fa-heart"></i> ile kürtüler mirasımızı korumak amacıyla... | First Lego League 2025-2026</p>
+            </div>
+        </div>
     </footer>
 
-    <!-- JS for AOS -->
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <!-- JavaScript -->
     <script>
-        AOS.init();
-    </script>
+        // Navigation Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.querySelector('.nav-menu');
 
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Active link highlighting
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-menu a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Chart.js Implementation
+        const ctx = document.getElementById('sensorChart').getContext('2d');
+        
+        // Data for humidity chart
+        const humidityData = {
+            labels: ['0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', '24'],
+            datasets: [
+                {
+                    label: 'BioGel Uygulanmış',
+                    data: [85, 84, 83, 82, 81, 80, 79, 78, 77, 76, 75, 74, 73],
+                    borderColor: '#00acc1',
+                    backgroundColor: 'rgba(0, 172, 193, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Kontrol Örneği',
+                    data: [85, 75, 65, 55, 45, 40, 35, 30, 28, 26, 24, 22, 20],
+                    borderColor: '#ff4081',
+                    backgroundColor: 'rgba(255, 64, 129, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }
+            ]
+        };
+
+        // Data for temperature chart
+        const temperatureData = {
+            labels: ['0', '2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', '24'],
+            datasets: [
+                {
+                    label: 'BioGel Uygulanmış',
+                    data: [22, 22.1, 22, 21.9, 21.8, 21.9, 22, 22.1, 22, 21.9, 21.8, 21.9, 22],
+                    borderColor: '#00acc1',
+                    backgroundColor: 'rgba(0, 172, 193, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Kontrol Örneği',
+                    data: [22, 23, 24, 25, 26, 27, 28, 27, 26, 25, 24, 23, 22],
+                    borderColor: '#ff4081',
+                    backgroundColor: 'rgba(255, 64, 129, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }
+            ]
+        };
+
+        // Data for stability chart
+        const stabilityData = {
+            labels: ['Nem Stabilitesi', 'Sıcaklık Kontrolü', 'Fiziksel Bütünlük', 'Kimyasal Stabilite'],
+            datasets: [
+                {
+                    label: 'BioGel Uygulanmış',
+                    data: [94, 88, 96, 92],
+                    backgroundColor: 'rgba(0, 172, 193, 0.7)',
+                    borderColor: '#00acc1',
+                    borderWidth: 2
+                },
+                {
+                    label: 'Kontrol Örneği',
+                    data: [25, 45, 30, 35],
+                    backgroundColor: 'rgba(255, 64, 129, 0.7)',
+                    borderColor: '#ff4081',
+                    borderWidth: 2
+                }
+            ]
+        };
+
+        // Chart configuration
+        const chartConfig = {
+            type: 'line',
+            data: humidityData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 14,
+                                family: "'Poppins', sans-serif"
+                            },
+                            padding: 20
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: '24 Saatlik Nem Karşılaştırması (%)',
+                        font: {
+                            size: 18,
+                            family: "'Poppins', sans-serif"
+                        },
+                        padding: {
+                            top: 10,
+                            bottom: 30
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 0,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Nem Oranı (%)',
+                            font: {
+                                size: 14,
+                                family: "'Roboto', sans-serif"
+                            }
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Saat',
+                            font: {
+                                size: 14,
+                                family: "'Roboto', sans-serif"
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        // Create chart
+        const sensorChart = new Chart(ctx, chartConfig);
+
+        // Chart switching
+        const controlBtns = document.querySelectorAll('.control-btn');
+        
+        controlBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                controlBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                // Change chart based on button data
+                const chartType = btn.getAttribute('data-chart');
+                
+                switch(chartType) {
+                    case 'humidity':
+                        sensorChart.data = humidityData;
+                        sensorChart.options.plugins.title.text = '24 Saatlik Nem Karşılaştırması (%)';
+                        sensorChart.options.scales.y.title.text = 'Nem Oranı (%)';
+                        sensorChart.options.scales.y.min = 0;
+                        sensorChart.options.scales.y.max = 100;
+                        sensorChart.config.type = 'line';
+                        break;
+                    case 'temperature':
+                        sensorChart.data = temperatureData;
+                        sensorChart.options.plugins.title.text = '24 Saatlik Sıcaklık Karşılaştırması (°C)';
+                        sensorChart.options.scales.y.title.text = 'Sıcaklık (°C)';
+                        sensorChart.options.scales.y.min = 20;
+                        sensorChart.options.scales.y.max = 30;
+                        sensorChart.config.type = 'line';
+                        break;
+                    case 'stability':
+                        sensorChart.data = stabilityData;
+                        sensorChart.options.plugins.title.text = 'Koruma Performans Karşılaştırması (%)';
+                        sensorChart.options.scales.y.title.text = 'Performans (%)';
+                        sensorChart.options.scales.y.min = 0;
+                        sensorChart.options.scales.y.max = 100;
+                        sensorChart.config.type = 'bar';
+                        break;
+                }
+                
+                sensorChart.update();
+            });
+        });
+
+        // Fade-in animation on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeInOnScroll = () => {
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', fadeInOnScroll);
+        // Initial check
+        fadeInOnScroll();
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            
+            // Show success message
+            alert(`Teşekkürler ${name}! Mesajınız başarıyla gönderildi. Size ${email} adresinden dönüş yapacağız.`);
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Initialize with first chart visible
+        window.addEventListener('load', () => {
+            // Trigger fade-in animation on load
+            fadeElements.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight) {
+                    el.classList.add('visible');
+                }
+            });
+            
+            // Set first button as active
+            controlBtns[0].click();
+        });
+    </script>
 </body>
 </html>
